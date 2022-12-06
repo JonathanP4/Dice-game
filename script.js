@@ -1,9 +1,4 @@
 'use-strict';
-//1 - when button clicked generate number (1-6) ✅
-//2 - if dice rolls 1 change active player ✅
-//3 - if hold btn is clicked change player ✅
-//4 - when hold button clicked change score to the one in active score
-
 const holdBtn = document.querySelector('.btn--hold');
 const rollBtn = document.querySelector('.btn--roll');
 const current0 = document.querySelector('#current--0');
@@ -15,12 +10,9 @@ const player2 = document.querySelector('.player--1');
 const newGame = document.querySelector('.btn--new');
 
 let dice = document.querySelector('.dice')
-
 let diceRoll;
-
 let numberScore0;
 let numberCurrent0;
-
 let numberScore1;
 let numberCurrent1;
 
@@ -36,7 +28,6 @@ const switchPlayer = () => {
 
 const resetAll = () => {
   diceRoll = 0
-
   currentScore0 = 0
   currentScore1 = 0
   current0.textContent = 0
@@ -72,15 +63,30 @@ holdBtn.addEventListener('click', () => {
   }
   resetAll()
   switchPlayer()
+
+  if (Number(score0.textContent) >= 100) {
+    player2.classList.remove('player--active')
+    player1.classList.add('player--winner')
+  }
+  if (Number(score1.textContent) >= 100) {
+    player1.classList.remove('player--active')
+    player2.classList.add('player--winner')
+  }
 })
 
 newGame.addEventListener('click', () => {
+  if (player1.classList.contains('player--winner')) {
+    player1.classList.remove('player--winner')
+  } else {
+    player2.classList.remove('player--winner')
+  }
+  player2.classList.remove('player--active')
+  player1.classList.add('player--active')
   player2.classList.remove('player--active')
   player1.classList.add('player--active')
 
   score1.textContent = 0
   score0.textContent = 0
   dice.src = 'dice-5.png'
-
   resetAll()
 })
