@@ -1,4 +1,5 @@
 'use-strict';
+
 const holdBtn = document.querySelector('.btn--hold');
 const rollBtn = document.querySelector('.btn--roll');
 const current0 = document.querySelector('#current--0');
@@ -90,3 +91,4 @@ newGame.addEventListener('click', () => {
   dice.src = 'dice-5.png'
   resetAll()
 })
+
