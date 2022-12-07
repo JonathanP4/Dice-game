@@ -13,7 +13,7 @@ const rollBtn = document.querySelector('.btn--roll');
 const holdBtn = document.querySelector('.btn--hold');
 const newGame = document.querySelector('.btn--new');
 
-dice.classList.add('hidden');
+
 
 let scores, currentScore, activePlayer, playing
 
@@ -29,13 +29,14 @@ const initialState = () => {
   current0.textContent = 0
   current1.textContent = 0
 
+  dice.classList.add('hidden');
   player0.classList.add('player--active');
   player1.classList.remove('player--active');
 
   player0.classList.remove('player--winner');
   player1.classList.remove('player--winner');
 }
-initialState()
+initialState();
 
 //Function for the switch player logic
 const switchPlayer = () => {
@@ -46,8 +47,28 @@ const switchPlayer = () => {
   player1.classList.toggle('player--active');
 }
 
-//Function for the hold logic
-const hold = () => {
+//When clicking on 'new game' button call the initialState function
+//wich will reset the game to it's starting point
+newGame.addEventListener('click', initialState)
+
+//When clicking the 'roll dice' button or pressing the enter key generate a dice roll
+rollBtn.addEventListener('click', () => {
+  if (playing) {
+    const diceRoll = Math.trunc(Math.random() * 6) + 1;
+    dice.classList.remove('hidden');
+    dice.src = `images/dice-${diceRoll}.png`;
+
+    if (diceRoll !== 1) {
+      currentScore += diceRoll;
+      document.getElementById(`current--${activePlayer}`).textContent = currentScore;
+    } else {
+      switchPlayer()
+    }
+  }
+})
+
+//When clicking the 'hold' button hold current score
+holdBtn.addEventListener('click', () => {
   if (playing) {
     scores[activePlayer] += currentScore;
     document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
@@ -65,48 +86,5 @@ const hold = () => {
     } else {
       switchPlayer()
     }
-  }
-}
-
-//Function for the dice roll logic
-const rollDice = () => {
-  if (playing) {
-    const diceRoll = Math.trunc(Math.random() * 6) + 1;
-    dice.classList.remove('hidden');
-    dice.src = `images/dice-${diceRoll}.png`;
-
-    if (diceRoll !== 1) {
-      currentScore += diceRoll;
-      document.getElementById(`current--${activePlayer}`).textContent = currentScore;
-    } else {
-      switchPlayer()
-    }
-  }
-}
-
-//When clicking on 'new game' button call the initialState function
-//wich will reset the game to it's starting point
-newGame.addEventListener('click', () => {
-  initialState()
-})
-
-//When clicking the 'roll dice' button or pressing the enter key generate a dice roll
-rollBtn.addEventListener('click', () => {
-  rollDice()
-})
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    rollDice()
-  }
-})
-
-//When clicking the 'hold' button or pressing the space key generate hold current score
-holdBtn.addEventListener('click', () => {
-  hold()
-})
-
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') {
-    hold()
   }
 })
