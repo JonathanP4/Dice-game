@@ -51,7 +51,7 @@ const switchPlayer = () => {
 //wich will reset the game to it's starting point
 newGame.addEventListener('click', initialState)
 
-//When clicking the 'roll dice' button or pressing the enter key generate a dice roll
+//When clicking the 'roll dice' button generate a dice roll
 rollBtn.addEventListener('click', () => {
   if (playing) {
     const diceRoll = Math.trunc(Math.random() * 6) + 1;
