@@ -52,7 +52,7 @@ rollBtn.addEventListener('click', () => {
   if (playing) {
     const diceRoll = Math.trunc(Math.random() * 6) + 1;
     dice.classList.remove('hidden');
-    dice.src = `dice-${diceRoll}.png`;
+    dice.src = `images/dice-${diceRoll}.png`;
 
     if (diceRoll !== 1) {
       currentScore += diceRoll;
@@ -68,7 +68,7 @@ holdBtn.addEventListener('click', () => {
     scores[activePlayer] += currentScore;
     document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
 
-    if (scores[activePlayer] >= 10) {
+    if (scores[activePlayer] >= 100) {
       playing = false;
 
       dice.classList.add('hidden');
